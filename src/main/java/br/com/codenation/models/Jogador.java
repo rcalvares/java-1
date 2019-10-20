@@ -5,6 +5,7 @@ import br.com.codenation.repositories.JogadorRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Jogador {
 
@@ -71,6 +72,13 @@ public class Jogador {
     public void setSalario(BigDecimal salario) {
         this.salario = salario;
     }
+
+    public Integer retornaIdade (){
+
+        return Period.between(dataNascimento,LocalDate.now()).getYears();
+
+    }
+
 
 }
 

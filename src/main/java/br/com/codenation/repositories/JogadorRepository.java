@@ -3,13 +3,12 @@ package br.com.codenation.repositories;
 import br.com.codenation.exceptions.IdentificadorUtilizadoException;
 import br.com.codenation.exceptions.JogadorNaoEncontradoException;
 import br.com.codenation.models.Jogador;
-import br.com.codenation.models.Time;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.LongSummaryStatistics;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static br.com.codenation.utils.MensagensExcecao.ID_REPETIDO;
 import static br.com.codenation.utils.MensagensExcecao.JOGADOR_NAO_ENCONTRADO;
@@ -60,8 +59,7 @@ public class JogadorRepository {
                 filter(jogador -> jogador.getIdTime().equals(idTime))
                 .sorted(Comparator.comparingLong(Jogador::getId))
                 .map(jogador -> jogador.getId())
-                .collect(Collectors.toCollection(ArrayList::new))
-;
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public static Long buscarMelhorJogadorDoTime(Long idTime){
@@ -78,6 +76,40 @@ public class JogadorRepository {
                 .sorted(Comparator.comparingLong(Jogador::getId))
                 .collect(Collectors.toList());
     }
+
+    public static Long buscaJogadorMaisVelho(Long idTime){
+
+        List<Jogador> lista = buscarJogadoresCompletos(idTime);
+        return verificaQuantosJogadoresComIdadeMaxima(retornaIdadeMaisAlta(lista),lista).getId();
+
+    }
+
+    private static int retornaIdadeMaisAlta(List<Jogador> lista){
+
+        return lista.stream()
+                .max(Comparator.comparingInt(Jogador::retornaIdade))
+                .get()
+                .retornaIdade();
+    }
+
+    public static Jogador verificaQuantosJogadoresComIdadeMaxima(int idade, List<Jogador> jogadores){
+
+        List<Jogador> jogadoresIdadeMaxima = jogadores.stream().filter(jogador -> jogador.retornaIdade().equals(idade))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        if (jogadoresIdadeMaxima.size() == 1) return jogadoresIdadeMaxima.get(0);
+
+        return escolheJogadorMenorIdentificador(jogadoresIdadeMaxima);
+    }
+
+    public static Jogador escolheJogadorMenorIdentificador(List<Jogador> jogadoresIdadeMaxima){
+
+        return jogadoresIdadeMaxima.stream()
+                    .min(Comparator.comparingLong(Jogador::getId))
+                    .get();
+
+    }
+
 
 
 }

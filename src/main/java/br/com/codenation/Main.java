@@ -14,11 +14,11 @@ public class Main {
     public static void main(String[] args) {
 
         Jogador jogador1 =
-                new Jogador(1L,1L,"Rafael 1", LocalDate.now(),10, new BigDecimal(10));
+                new Jogador(1L,1L,"Rafael 1", LocalDate.of(1997,03,01),10, new BigDecimal(10));
         Jogador jogador2 =
-                new Jogador(2L,1L,"Rafael 2", LocalDate.now(),15, new BigDecimal(10));
+                new Jogador(2L,1L,"Rafael 2", LocalDate.of(1990,02,22),15, new BigDecimal(10));
         Jogador jogador3 =
-                new Jogador(3L,1L,"Rafael 3", LocalDate.now(),20, new BigDecimal(10));
+                new Jogador(3L,1L,"Rafael 3", LocalDate.of(1995,03,01),20, new BigDecimal(10));
         Jogador jogador4 =
                 new Jogador(4L,1L,"Rafael 4", LocalDate.now(),30, new BigDecimal(10));
 
@@ -39,8 +39,8 @@ public class Main {
         JogadorRepository.incluirJogador(jogador3);
         JogadorRepository.incluirJogador(jogador4);
 
-        System.out.println(JogadorRepository.buscarJogadoresDoTime(2L));
-        System.out.println(JogadorRepository.buscarMelhorJogadorDoTime(2L));
+//        System.out.println(JogadorRepository.buscarJogadoresDoTime(2L));
+        System.out.println(JogadorRepository.buscaJogadorMaisVelho(1L));
 
 
 

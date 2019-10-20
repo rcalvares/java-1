@@ -2,11 +2,14 @@ package br.com.codenation.repositories;
 
 import br.com.codenation.exceptions.IdentificadorUtilizadoException;
 import br.com.codenation.exceptions.TimeNaoEncontradoException;
+import br.com.codenation.models.Jogador;
 import br.com.codenation.models.Time;
 import br.com.codenation.utils.MensagensExcecao;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static br.com.codenation.utils.MensagensExcecao.*;
 
@@ -30,6 +33,13 @@ public class TimeRepository {
         verificarTimeExistente(id);
         return times.stream().filter(time -> time.getId().equals(id)).findFirst().get().getNome();
 
+    }
+
+    public static List<Long> buscarTimes() {
+        return  times.stream()
+                .sorted(Comparator.comparingLong(Time::getId))
+                .map(time -> time.getId())
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
 }
