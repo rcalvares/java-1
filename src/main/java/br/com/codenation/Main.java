@@ -39,8 +39,8 @@ public class Main {
         JogadorRepository.incluirJogador(jogador3);
         JogadorRepository.incluirJogador(jogador4);
 
-        System.out.println(JogadorRepository.buscarJogadoresDoTime(1L));
-        System.out.println(JogadorRepository.buscarMelhorJogadorDoTime(1L));
+        System.out.println(JogadorRepository.buscarJogadoresDoTime(2L));
+        System.out.println(JogadorRepository.buscarMelhorJogadorDoTime(2L));
 
 
 

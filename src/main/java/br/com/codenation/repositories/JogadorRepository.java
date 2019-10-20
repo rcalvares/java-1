@@ -8,6 +8,7 @@ import br.com.codenation.models.Time;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.LongSummaryStatistics;
 import java.util.stream.Collectors;
 
 import static br.com.codenation.utils.MensagensExcecao.ID_REPETIDO;
@@ -53,7 +54,24 @@ public class JogadorRepository {
 
     }
 
-    public static List<Jogador> buscarJogadoresDoTime(Long idTime) {
+    public static List<Long> buscarJogadoresDoTime(Long idTime) {
+        TimeRepository.verificarTimeExistente(idTime);
+        return  jogadores.stream().
+                filter(jogador -> jogador.getIdTime().equals(idTime))
+                .sorted(Comparator.comparingLong(Jogador::getId))
+                .map(jogador -> jogador.getId())
+                .collect(Collectors.toCollection(ArrayList::new))
+;
+    }
+
+    public static Long buscarMelhorJogadorDoTime(Long idTime){
+        return buscarJogadoresCompletos(idTime).stream()
+                .max(Comparator.comparingInt(Jogador::getNivelHabilidade))
+                .get()
+                .getId();
+    }
+
+    public static List<Jogador> buscarJogadoresCompletos(Long idTime) {
         TimeRepository.verificarTimeExistente(idTime);
         return jogadores.stream()
                 .filter(jogador -> jogador.getIdTime().equals(idTime))
@@ -61,11 +79,5 @@ public class JogadorRepository {
                 .collect(Collectors.toList());
     }
 
-    public static String buscarMelhorJogadorDoTime(Long idTime){
-        return buscarJogadoresDoTime(idTime).stream()
-                .max(Comparator.comparingInt(Jogador::getNivelHabilidade))
-                .get()
-                .getNome();
-    }
 
 }
