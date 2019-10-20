@@ -16,11 +16,11 @@ public class Main {
         Jogador jogador1 =
                 new Jogador(1L,1L,"Rafael 1", LocalDate.now(),10, new BigDecimal(10));
         Jogador jogador2 =
-                new Jogador(2L,30L,"Rafael 2", LocalDate.now(),10, new BigDecimal(10));
+                new Jogador(2L,1L,"Rafael 2", LocalDate.now(),15, new BigDecimal(10));
         Jogador jogador3 =
-                new Jogador(3L,1L,"Rafael 3", LocalDate.now(),10, new BigDecimal(10));
+                new Jogador(3L,1L,"Rafael 3", LocalDate.now(),20, new BigDecimal(10));
         Jogador jogador4 =
-                new Jogador(4L,3L,"Rafael 4", LocalDate.now(),10, new BigDecimal(10));
+                new Jogador(4L,1L,"Rafael 4", LocalDate.now(),30, new BigDecimal(10));
 
         Time time1 = new Time(1L,"Cruzeiro",LocalDate.now(),"Azul","Branco");
         Time time2 = new Time(2L,"Cruzeiro",LocalDate.now(),"Azul","Branco");
@@ -39,11 +39,9 @@ public class Main {
         JogadorRepository.incluirJogador(jogador3);
         JogadorRepository.incluirJogador(jogador4);
 
-        CapitaoRepository.definirCapitao(jogador1.getId());
+        System.out.println(JogadorRepository.buscarJogadoresDoTime(1L));
+        System.out.println(JogadorRepository.buscarMelhorJogadorDoTime(1L));
 
-
-        CapitaoRepository.definirCapitao(jogador2.getId());
-        CapitaoRepository.definirCapitao(jogador4.getId());
 
 
 
