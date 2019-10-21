@@ -3,6 +3,7 @@ package br.com.codenation.repositories;
 import br.com.codenation.exceptions.IdentificadorUtilizadoException;
 import br.com.codenation.exceptions.JogadorNaoEncontradoException;
 import br.com.codenation.models.Jogador;
+import br.com.codenation.models.Time;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -116,6 +117,17 @@ public class JogadorRepository {
 
         verificarJogadorExistente(id);
         return jogadores.stream().filter(jogador -> jogador.getId().equals(id)).findFirst().get().getSalario();
+
+    }
+
+    public static Long buscarJogadorMaiorSalario(Long idTime){
+
+        return jogadores.stream()
+                .filter(jogador -> jogador.getId().equals(idTime))
+                .sorted(Comparator.comparing(Jogador::getSalario).reversed())
+                .findFirst()
+                .get()
+                .getId();
 
     }
 

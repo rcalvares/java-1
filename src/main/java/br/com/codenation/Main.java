@@ -7,6 +7,7 @@ import br.com.codenation.repositories.JogadorRepository;
 import br.com.codenation.repositories.TimeRepository;
 
 import java.math.BigDecimal;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class Main {
                 new Jogador(4L,1L,"Rafael 4", LocalDate.now(),30, new BigDecimal(10));
 
         Time time1 = new Time(1L,"Cruzeiro",LocalDate.now(),"Azul","Branco");
-        Time time2 = new Time(2L,"Cruzeiro",LocalDate.now(),"Azul","Branco");
+        Time time2 = new Time(2L,"Cruzeiro",LocalDate.now(),"Roxo","Branco");
         Time time3 = new Time(3L,"Cruzeiro",LocalDate.now(),"Azul","Branco");
         Time time4 = new Time(4L,"Cruzeiro",LocalDate.now(),"Azul","Branco");
         Time time5 = new Time(5L,"Cruzeiro",LocalDate.now(),"Azul","Branco");
@@ -42,8 +43,10 @@ public class Main {
 
 //        System.out.println(JogadorRepository.buscarJogadoresDoTime(2L));
 //        System.out.println(JogadorRepository.buscarJogadorMaisVelho(1L));
-        List<Jogador> testes = JogadorRepository.buscarTopJogadores(2);
-        testes.forEach(teste -> System.out.println(teste.getNome()));
+//        List<Jogador> testes = JogadorRepository.buscarTopJogadores(2);
+//        testes.forEach(teste -> System.out.println(teste.getNome()));
+
+        System.out.println(TimeRepository.buscarCorCamisaTimeDeFora(3L,2L));
 
 
 

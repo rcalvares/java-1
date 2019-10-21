@@ -6,77 +6,83 @@ import java.util.List;
 
 import br.com.codenation.desafio.annotation.Desafio;
 import br.com.codenation.desafio.app.MeuTimeInterface;
+import br.com.codenation.models.Jogador;
+import br.com.codenation.models.Time;
+import br.com.codenation.repositories.CapitaoRepository;
+import br.com.codenation.repositories.JogadorRepository;
+import br.com.codenation.repositories.TimeRepository;
 
 public class DesafioMeuTimeApplication implements MeuTimeInterface {
 
 	@Desafio("incluirTime")
 	public void incluirTime(Long id, String nome, LocalDate dataCriacao, String corUniformePrincipal, String corUniformeSecundario) {
-		throw new UnsupportedOperationException();
+		TimeRepository.inserirTime(new Time(id, nome, dataCriacao, corUniformePrincipal, corUniformeSecundario));
 	}
 
 	@Desafio("incluirJogador")
 	public void incluirJogador(Long id, Long idTime, String nome, LocalDate dataNascimento, Integer nivelHabilidade, BigDecimal salario) {
-		throw new UnsupportedOperationException();
+		JogadorRepository.incluirJogador(new Jogador(id, idTime, nome, dataNascimento, nivelHabilidade, salario));
 	}
 
 	@Desafio("definirCapitao")
 	public void definirCapitao(Long idJogador) {
-		throw new UnsupportedOperationException();
+		CapitaoRepository.definirCapitao(idJogador);
 	}
 
 	@Desafio("buscarCapitaoDoTime")
 	public Long buscarCapitaoDoTime(Long idTime) {
-		throw new UnsupportedOperationException();
+		return CapitaoRepository.buscarCapitaoDoTime(idTime).getId();
 	}
 
 	@Desafio("buscarNomeJogador")
 	public String buscarNomeJogador(Long idJogador) {
-		throw new UnsupportedOperationException();
+		return JogadorRepository.buscarNomeJogador(idJogador);
 	}
 
 	@Desafio("buscarNomeTime")
 	public String buscarNomeTime(Long idTime) {
-		throw new UnsupportedOperationException();
+
+		return TimeRepository.buscarNomeTime(idTime);
 	}
 
 	@Desafio("buscarJogadoresDoTime")
 	public List<Long> buscarJogadoresDoTime(Long idTime) {
-		throw new UnsupportedOperationException();
+		return JogadorRepository.buscarJogadoresDoTime(idTime);
 	}
 
 	@Desafio("buscarMelhorJogadorDoTime")
 	public Long buscarMelhorJogadorDoTime(Long idTime) {
-		throw new UnsupportedOperationException();
+		return buscarMelhorJogadorDoTime(idTime);
 	}
 
 	@Desafio("buscarJogadorMaisVelho")
 	public Long buscarJogadorMaisVelho(Long idTime) {
-		throw new UnsupportedOperationException();
+		return JogadorRepository.buscarJogadorMaisVelho(idTime);
 	}
 
 	@Desafio("buscarTimes")
 	public List<Long> buscarTimes() {
-		throw new UnsupportedOperationException();
+		return TimeRepository.buscarTimes();
 	}
 
 	@Desafio("buscarJogadorMaiorSalario")
 	public Long buscarJogadorMaiorSalario(Long idTime) {
-		throw new UnsupportedOperationException();
+		return JogadorRepository.buscarJogadorMaiorSalario(idTime);
 	}
 
 	@Desafio("buscarSalarioDoJogador")
 	public BigDecimal buscarSalarioDoJogador(Long idJogador) {
-		throw new UnsupportedOperationException();
+		return JogadorRepository.buscarSalarioDoJogador(idJogador);
 	}
 
 	@Desafio("buscarTopJogadores")
-	public List<Long> buscarTopJogadores(Integer top) {
-		throw new UnsupportedOperationException();
+	public List<Long> buscarTopJogadores(Integer top){
+		return buscarTopJogadores(top);
 	}
 
 	@Desafio("buscarCorCamisaTimeDeFora")
 	public String buscarCorCamisaTimeDeFora(Long timeDaCasa, Long timeDeFora) {
-		throw new UnsupportedOperationException();
+		return TimeRepository.buscarCorCamisaTimeDeFora(timeDaCasa, timeDeFora);
 	}
 
 }

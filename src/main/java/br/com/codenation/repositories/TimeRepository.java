@@ -42,6 +42,29 @@ public class TimeRepository {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public static Time buscarTime(Long idTime) {
+        return  times.stream()
+                .filter(time -> time.getId().equals(idTime))
+                .findFirst()
+                .get();
+    }
+
+    public static String buscarCorCamisaTimeDeFora(Long idTimeHome, Long idTimeAway){
+
+        if (validaCorIgual(idTimeHome, idTimeAway)) return buscarTime(idTimeAway).getCorUniformeSecundário();
+
+        return buscarTime(idTimeAway).getCorUniformePrincipal();
+    }
+
+    private static boolean validaCorIgual(Long idTimeHome, Long idTimeAway) {
+
+        Time timeHome = buscarTime(idTimeHome);
+        Time timeAway = buscarTime(idTimeAway);
+
+        return timeHome.getCorUniformePrincipal().equals(timeAway.getCorUniformePrincipal());
+
+    }
+
 
 
 }
