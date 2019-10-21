@@ -8,6 +8,7 @@ import br.com.codenation.repositories.TimeRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Main {
 
@@ -16,7 +17,7 @@ public class Main {
         Jogador jogador1 =
                 new Jogador(1L,1L,"Rafael 1", LocalDate.of(1997,03,01),10, new BigDecimal(10));
         Jogador jogador2 =
-                new Jogador(2L,1L,"Rafael 2", LocalDate.of(1990,02,22),15, new BigDecimal(10));
+                new Jogador(2L,1L,"Rafael 2", LocalDate.of(1990,02,22),20, new BigDecimal(10));
         Jogador jogador3 =
                 new Jogador(3L,1L,"Rafael 3", LocalDate.of(1995,03,01),20, new BigDecimal(10));
         Jogador jogador4 =
@@ -40,8 +41,9 @@ public class Main {
         JogadorRepository.incluirJogador(jogador4);
 
 //        System.out.println(JogadorRepository.buscarJogadoresDoTime(2L));
-        System.out.println(JogadorRepository.buscaJogadorMaisVelho(1L));
-
+//        System.out.println(JogadorRepository.buscarJogadorMaisVelho(1L));
+        List<Jogador> testes = JogadorRepository.buscarTopJogadores(2);
+        testes.forEach(teste -> System.out.println(teste.getNome()));
 
 
 

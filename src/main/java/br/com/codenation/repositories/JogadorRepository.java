@@ -4,11 +4,12 @@ import br.com.codenation.exceptions.IdentificadorUtilizadoException;
 import br.com.codenation.exceptions.JogadorNaoEncontradoException;
 import br.com.codenation.models.Jogador;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static br.com.codenation.utils.MensagensExcecao.ID_REPETIDO;
 import static br.com.codenation.utils.MensagensExcecao.JOGADOR_NAO_ENCONTRADO;
@@ -16,6 +17,7 @@ import static br.com.codenation.utils.MensagensExcecao.JOGADOR_NAO_ENCONTRADO;
 public class JogadorRepository {
 
     private static List<Jogador> jogadores = new ArrayList<>();
+
 
     public static void incluirJogador(Jogador j){
 
@@ -77,7 +79,7 @@ public class JogadorRepository {
                 .collect(Collectors.toList());
     }
 
-    public static Long buscaJogadorMaisVelho(Long idTime){
+    public static Long buscarJogadorMaisVelho(Long idTime){
 
         List<Jogador> lista = buscarJogadoresCompletos(idTime);
         return verificaQuantosJogadoresComIdadeMaxima(retornaIdadeMaisAlta(lista),lista).getId();
@@ -109,6 +111,28 @@ public class JogadorRepository {
                     .get();
 
     }
+
+    public static BigDecimal buscarSalarioDoJogador(Long id){
+
+        verificarJogadorExistente(id);
+        return jogadores.stream().filter(jogador -> jogador.getId().equals(id)).findFirst().get().getSalario();
+
+    }
+
+    public static List<Jogador> buscarTopJogadores(Integer top){
+
+        if (jogadores.size() <= top) return new ArrayList<>();
+
+        Comparator<Jogador> comparator = Comparator.comparingInt(Jogador::getNivelHabilidade)
+                .reversed()
+                .thenComparingLong(Jogador::getId);
+
+        Collections.sort(jogadores,comparator);
+
+        return jogadores.subList(0,top);
+
+    }
+
 
 
 
