@@ -2,6 +2,7 @@ package br.com.codenation.models;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Objects;
 
 public class Jogador {
@@ -76,5 +77,9 @@ public class Jogador {
 
     public void setIdTime(Long idTime) {
         this.idTime = idTime;
+    }
+
+    public Integer retornaIdade() {
+        return Period.between(dataNascimento,LocalDate.now()).getYears();
     }
 }

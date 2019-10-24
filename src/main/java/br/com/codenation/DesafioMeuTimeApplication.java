@@ -3,6 +3,7 @@ package br.com.codenation;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,37 +74,71 @@ public class DesafioMeuTimeApplication implements MeuTimeInterface {
 
 	@Desafio("buscarMelhorJogadorDoTime")
 	public Long buscarMelhorJogadorDoTime(Long idTime) {
-		throw new UnsupportedOperationException();
+		recuperarTime(idTime);
+		return jogadores.stream()
+				.filter(jogador -> jogador.getIdTime().equals(idTime))
+				.max(Comparator.comparing(Jogador::getNivelHabilidade))
+				.get()
+				.getId();
 	}
 
 	@Desafio("buscarJogadorMaisVelho")
 	public Long buscarJogadorMaisVelho(Long idTime) {
-		throw new UnsupportedOperationException();
+		recuperarTime(idTime);
+		List<Jogador> listaJogadores = jogadores.stream()
+				.filter(jogador -> jogador.getIdTime().equals(idTime))
+				.collect(Collectors.toList());
+		return verificaQuantosJogadoresComIdadeMaxima(retornaIdadeMaisAlta(listaJogadores),listaJogadores).getId();
+
 	}
 
 	@Desafio("buscarTimes")
 	public List<Long> buscarTimes() {
-		throw new UnsupportedOperationException();
+		if (times.isEmpty()) return new ArrayList<>();
+		return times.stream()
+				.map(time -> time.getId())
+				.sorted()
+				.collect(Collectors.toList());
 	}
 
 	@Desafio("buscarJogadorMaiorSalario")
 	public Long buscarJogadorMaiorSalario(Long idTime) {
-		throw new UnsupportedOperationException();
+		recuperarTime(idTime);
+		return jogadores.stream()
+				.filter(jogador -> jogador.getIdTime().equals(idTime))
+				.max(Comparator.comparing(Jogador::getSalario))
+				.get().getId();
 	}
 
-	@Desafio("buscarSalarioDoJogador")
+	@Desafio("buscarSalarioDoJogador") //TODO teste
 	public BigDecimal buscarSalarioDoJogador(Long idJogador) {
-		throw new UnsupportedOperationException();
+		return recuperarJogador(idJogador).getSalario();
 	}
 
 	@Desafio("buscarTopJogadores")
 	public List<Long> buscarTopJogadores(Integer top) {
-		throw new UnsupportedOperationException();
+		jogadores.sort(Comparator.comparingLong(Jogador::getNivelHabilidade).reversed()
+					.thenComparing(Jogador::getId));
+		return jogadores.stream()
+				.map(jogador -> jogador.getId())
+				.collect(Collectors.toList())
+				.subList(0,top);
 	}
 
 	@Desafio("buscarCorCamisaTimeDeFora")
 	public String buscarCorCamisaTimeDeFora(Long timeDaCasa, Long timeDeFora) {
-		throw new UnsupportedOperationException();
+		if (validaCorIgual(timeDaCasa, timeDeFora)) return recuperarTime(timeDeFora).getCorUniformeSecundário();
+		return recuperarTime(timeDeFora).getCorUniformePrincipal();
+
+	}
+
+	private boolean validaCorIgual(Long idTimeHome, Long idTimeAway) {
+
+		Time timeHome = recuperarTime(idTimeHome);
+		Time timeAway = recuperarTime(idTimeAway);
+
+		return timeHome.getCorUniformePrincipal().equals(timeAway.getCorUniformePrincipal());
+
 	}
 
 	public Jogador recuperarJogador(Long idJogador){
@@ -137,6 +172,35 @@ public class DesafioMeuTimeApplication implements MeuTimeInterface {
 	private void removerCapitao(Long idTime){
 		capitoes.remove(recuperarCapitao(idTime));
 	}
+
+	private  int retornaIdadeMaisAlta(List<Jogador> lista){
+		return lista.stream()
+				.max(Comparator.comparingInt(Jogador::retornaIdade))
+				.get()
+				.retornaIdade();
+	}
+
+	public Jogador verificaQuantosJogadoresComIdadeMaxima(int idade, List<Jogador> jogadores){
+
+		List<Jogador> jogadoresIdadeMaxima = jogadores.stream()
+				.filter(jogador -> jogador.retornaIdade().equals(idade))
+				.collect(Collectors.toList());
+
+		if (jogadoresIdadeMaxima.size() == 1) return jogadoresIdadeMaxima.get(0);
+
+		return escolheJogadorMenorIdentificador(jogadoresIdadeMaxima);
+	}
+
+	public Jogador escolheJogadorMenorIdentificador(List<Jogador> jogadoresIdadeMaxima){
+
+		return jogadoresIdadeMaxima.stream()
+				.min(Comparator.comparingLong(Jogador::getId))
+				.get();
+
+	}
+
+
+
 
 
 }
