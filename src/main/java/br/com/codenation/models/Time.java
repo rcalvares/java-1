@@ -10,6 +10,17 @@ public class Time {
     private LocalDate dataCriacao;
     private String corUniformePrincipal;
     private String corUniformeSecundário;
+    private Long idCapitao = null;
+
+
+    public Long getIdCapitao() {
+        return idCapitao;
+    }
+
+    public void setIdCapitao(Long idCapitao) {
+        this.idCapitao = idCapitao;
+    }
+
 
     public String getNome() {
         return nome;
